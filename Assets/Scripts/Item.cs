@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace DS
 {
-    public class Item : MonoBehaviour
+    public class Item : ScriptableObject
     {
         [Header("Item Info")]
         public Sprite itemIcon;

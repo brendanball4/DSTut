@@ -22,7 +22,7 @@ namespace DS
         {
             inputHandler = GetComponent<InputHandler>();
             anim = GetComponentInChildren<Animator>();
-            cameraHandler = CameraHandler.singleton;
+            cameraHandler = FindObjectOfType<CameraHandler>();
             playerLocomotion = GetComponent<PlayerLocomotion>();
         }
 
@@ -32,15 +32,16 @@ namespace DS
             isInteracting = anim.GetBool("isInteracting");
 
             isSprinting = inputHandler.b_Input;
-            inputHandler.TickInput(delta);
-            playerLocomotion.HandleMovement(delta);
+            inputHandler.TickInput(delta);            
             playerLocomotion.HandleRollingAndSprinting(delta);
-            playerLocomotion.HandleFalling(delta, playerLocomotion.moveDirection);
         }
 
         private void FixedUpdate()
         {
             float delta = Time.fixedDeltaTime;
+
+            playerLocomotion.HandleMovement(delta);
+            playerLocomotion.HandleFalling(delta, playerLocomotion.moveDirection);
 
             if (cameraHandler != null)
             {
@@ -53,6 +54,8 @@ namespace DS
         {
             inputHandler.rollFlag = false;
             inputHandler.sprintFlag = false;
+            inputHandler.rb_Input = false;
+            inputHandler.rt_Input = false;
 
             if (isInAir)
             {

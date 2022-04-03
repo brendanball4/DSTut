@@ -33,6 +33,8 @@ namespace DS
         [SerializeField]
         float movementSpeed = 5;
         [SerializeField]
+        float walkingSpeed = 3;
+        [SerializeField]
         float sprintSpeed = 7;
         [SerializeField]
         float rotationSpeed = 10;
@@ -100,14 +102,24 @@ namespace DS
 
             float speed = movementSpeed;
 
-            if (inputHandler.sprintFlag)
+            if (inputHandler.sprintFlag && inputHandler.moveAmount > 0.5)
             {
                 speed = sprintSpeed;
                 playerManager.isSprinting = true;
                 moveDirection *= speed;
-            } else
+            } 
+            else
             {
-                moveDirection *= speed;
+                if (inputHandler.moveAmount < 0.5)
+                {
+                    moveDirection *= walkingSpeed;
+                    playerManager.isSprinting = false;
+                }
+                else
+                {
+                    moveDirection *= speed;
+                    playerManager.isSprinting = false;
+                }
             }
             Vector3 projectedVelocity = Vector3.ProjectOnPlane(moveDirection, normalVector);
             rigidbody.velocity = projectedVelocity;
@@ -188,7 +200,7 @@ namespace DS
                     }
                     else
                     {
-                        animatorHandler.PlayTargetAnimation("Locomotion", false);
+                        animatorHandler.PlayTargetAnimation("Empty", false);
                         inAirTimer = 0;
                     }
 
@@ -216,16 +228,13 @@ namespace DS
                 }
             }
 
-            if (playerManager.isGrounded)
+            if (playerManager.isInteracting || inputHandler.moveAmount > 0)
             {
-                if (playerManager.isInteracting || inputHandler.moveAmount > 0)
-                {
-                    myTransform.position = Vector3.Lerp(myTransform.position, targetPosition, Time.deltaTime);
-                }
-                else
-                {
-                    myTransform.position = targetPosition;
-                }
+                myTransform.position = Vector3.Lerp(myTransform.position, targetPosition, Time.deltaTime / 0.1f);
+            }
+            else
+            {
+                myTransform.position = targetPosition;
             }
         }
 
