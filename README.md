@@ -1,10 +1,17 @@
-### Dark Souls
+### Souls-like Game
 
-This is my version of Sebastian Graves Dark Souls tutorial series
-for creating a Dark Souls-like game in Unity 3D. I will be
-following this series whilst adding in my own / free textures
-available in the Unity Asset Store. The majority of the rigging
-and animations are generated from Adobe's Mixamo.
+#### Completed Features
+- Playable character with animations that I personally created and rigged in Blender
+- Equippable weapons
+- Health system
+- Fightable NPCs
+- Environment hazards
 
-The following link will take you to a playlist of his videos:
-- https://www.youtube.com/playlist?list=PLD_vBJjpCwJtrHIW1SS5_BNRk6KZJZ7_d
+#### Work in progress
+- Create AI logic for enemies
+- Create a user interface
+- Create a better rig for my character
+- Create a demo map with real assets
+- Create character customization
+- Create a usable and visual inventory system
+- Create items (weapons, shields, armour, potions, elixers, etc.)
